@@ -1,0 +1,234 @@
+@import "compass";
+@import "compass/css3";
+@import "compass/css3/opacity";
+@import "compass/support";
+@import "compass/css3/font-face";
+
+@-webkit-keyframes spin0 {
+  0% {
+    @include background(inline-image('coffee-maker.png') 0 20px no-repeat);
+
+  }
+  33% { 
+    @include background(inline-image('espresso-machine.png') 0 20px no-repeat);
+  }
+  66% {
+    @include background(inline-image('tea-pot.png') 0 20px no-repeat);
+  }
+}
+@-webkit-keyframes spin1 {
+  0% {
+    @include background(inline-image('coffee-filter.png') 0 20px no-repeat);
+  }
+  33% {
+    @include background(inline-image('espresso-tamper.png') 0 20px no-repeat);
+  }
+  66% {
+    @include background(inline-image('tea-strainer.png') 0 20px no-repeat);
+  }
+}
+@-webkit-keyframes spin2 {
+  0% {
+    @include background(inline-image('coffee-grounds.png') 0 20px no-repeat);
+  }
+  33% {
+    @include background(inline-image('espresso-beans.png') 0 20px no-repeat);
+  }
+  66% {
+    @include background(inline-image('tea-loose.png') 0 20px no-repeat);
+  }
+}
+
+@-webkit-keyframes textshift {
+  from {
+    left: 0;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@-moz-keyframes spin0 {
+  0% { @include background(inline-image('coffee-maker.png')); }
+  33% { @include background(inline-image('espresso-machine.png')); }
+  66% { @include background(inline-image('tea-pot.png')); }
+}
+@-moz-keyframes spin1 {
+  0% { @include background(inline-image('coffee-filter.png')); }
+  33% { @include background(inline-image('espresso-tamper.png')); }
+  66% { @include background(inline-image('tea-strainer.png')); }
+}
+@-moz-keyframes spin2 {
+  0% { @include background(inline-image('coffee-grounds.png')); }
+  33% { @include background(inline-image('espresso-beans.png')); }
+  66% { @include background(inline-image('tea-loose.png')); }
+}
+
+body {
+  @include background(linear-gradient)
+}
+#slot-0 {
+  @include background(inline-image('coffee-maker.png'));
+}
+#slot-1 {
+  @include background(inline-image('coffee-filter.png'));
+}
+#slot-2 {
+  @include background(inline-image('coffee-grounds.png'));
+}
+
+#slots {
+  position: absolute;
+  width: 720px;
+  height: 240px;
+  left: 50%;
+  top: 150px;
+  margin-left: -360px;
+  clear: both;
+  background-color: #fff;
+
+  @include border-radius(10px);
+  @include background(linear-gradient(#333,#555,#333));
+  @include box-shadow(rgba(#000,.75) 0 0 30px 0px inset);
+
+  .slot {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    float: left;
+    @include box-shadow(rgba(#fff,1) 0 0 10px 0 inset,rgba(#000,.5) 0 10px 40px 0 inset, rgba(#000,.5) 0 20px 20px 0 inset, rgba(#000,.5) 0 -20px 20px 0 inset, rgba(#000,1) 0 0 0 5px);
+    @include border-radius(5px);
+
+    &.spinning {
+      @for $i from 0 to 3 {
+        &#slot-#{$i} {
+          animation: spin#{$i};
+          -moz-animation-name: spin#{$i};
+          -webkit-animation-name: spin#{$i};
+        }
+      }
+      animation-duration: .5s;
+      animation-iteration-count: infinite;
+      -webkit-animation-duration: .5s;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-duration: .5s;
+      -moz-animation-iteration-count: infinite;
+    }
+    
+
+    @each $item in maker, filter, grounds {
+      &[data-result='#{$item}'] {
+        @include background(inline-image('coffee-#{$item}.png'));
+        background-color: #fff !important;
+      }
+    }
+
+    @each $item in machine, tamper, beans {
+      &[data-result='#{$item}'] {
+        @include background(inline-image('espresso-#{$item}.png'));
+        background-color: #fff !important;
+      }
+    }
+
+    @each $item in pot, strainer, loose {
+      &[data-result='#{$item}'] {
+        @include background(inline-image('tea-#{$item}.png'));
+        background-color: #fff !important;
+      }
+    }
+  }
+}
+
+@font-face {
+  font-family: 'OzoneRegular';
+  src: url('fonts/ozone-webfont.eot');
+  src: url('fonts/ozone-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/ozone-webfont.woff') format('woff'),
+       url('fonts/ozone-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+#results {
+  @include border-radius(3px);
+
+  width: 720px;
+  margin-left: -360px;
+  height: 100px;
+  left: 50%;
+  font-size: 4em;
+  position: absolute;
+  top: 25px;
+  overflow: hidden;
+  @include background(linear-gradient(#222, #555, #222));
+  @include box-shadow(rgba(#000,.75) 0 0 40px 0 inset);
+  .dots {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include background(inline-image('dots.png'));
+    @include opacity(.75);
+    p,marquee {
+      position: relative;
+      padding-top: 17px;
+      font-family: 'OzoneRegular';
+      color: #ffdc64;
+      animation-name: textshift;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      -webkit-animation-name: textshift;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-direction: alternate;
+    }
+    p {
+      text-align: center;
+    }
+  }
+}
+
+#info {
+  position: absolute;
+  width: 660px;
+  height: 200px;
+  top: 370px;
+  left: 50%;
+  margin-left: -330px;
+  #button {
+    cursor: pointer;
+    font-family: Arial;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    border-color: #620000;
+    border-style: solid;
+    border-bottom-width: 4px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-left-color: #a10000;
+    p {
+      position: absolute;
+      top: 16px;
+      left: 0;
+      right: 0;
+    }
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: 50%;
+    margin-top: -25px;
+    right: 10px;
+    background-color: red;
+    @include border-radius(3px);
+    @include background(linear-gradient(rgba(#f00,1), rgba(#bc0000,1)));
+    @include box-shadow(rgba(#000,0.5) 0 0 15px 0 inset, rgba(#fff, 1) 0 0 10px 0 inset);
+    &.active {
+      border-left-width: 1px;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+      margin-top: -21px;
+    }
+  }
+}
