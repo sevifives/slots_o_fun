@@ -46,7 +46,6 @@ $('#button').click(function () {
     updateSlot(i,results[i]);
   }
 }).mousedown(function () {
-  console.log(this);
   $(this).addClass('active');
 }).mouseup(function () {
   $(this).removeClass('active');
