@@ -1,4 +1,4 @@
-## WHat?
+## What?
 
 I love this thing... I made it a long time ago when I was interviewing somewhere or another and they wanted a js/css slot machine.
 
